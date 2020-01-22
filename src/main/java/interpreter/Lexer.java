@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lexer {
-    private static Pattern STRING_PATTERN = Pattern.compile("^(\"(?<string>[^\"]+)\").*");
     private static Pattern IDENT_PATTERN = Pattern.compile("^((?<ident>\\w+)).*");
     private static Pattern INT_PATTERN = Pattern.compile("^((?<int>\\d+)).*");
 
@@ -32,14 +31,6 @@ public class Lexer {
         if (slice.charAt(0) == ')') {
             slice = slice.substring(1);
             return Optional.of(new PlainToken(TokenType.RPAREN));
-        }
-
-        Matcher stringMatcher = STRING_PATTERN.matcher(slice);
-        if (stringMatcher.matches()) {
-            // We take the length of the whole match and slice it
-            int length = stringMatcher.group(1).length();
-            slice = slice.substring(length);
-            return Optional.of(new DataToken(TokenType.STRING_LITERAL, stringMatcher.group("string")));
         }
 
         Matcher intMatcher = INT_PATTERN.matcher(slice);
@@ -77,7 +68,6 @@ enum TokenType {
     LPAREN,
     RPAREN,
     IDENTIFIER,
-    STRING_LITERAL,
     INT_LITERAL;
 
     public String toString() {
@@ -88,8 +78,6 @@ enum TokenType {
                 return ")";
             case IDENTIFIER:
                 return "<ident>";
-            case STRING_LITERAL:
-                return "<string>";
             case INT_LITERAL:
                 return "<int>";
             default:
@@ -156,8 +144,6 @@ class DataToken extends Token {
             case IDENTIFIER:
             case INT_LITERAL:
                 return contents;
-            case STRING_LITERAL:
-                return String.format("\"%s\"", contents);
             default:
                 return type.toString();
         }

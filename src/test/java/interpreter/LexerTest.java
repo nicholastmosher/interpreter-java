@@ -30,18 +30,4 @@ public class LexerTest {
         List<Token> actualTokens = new Lexer(program).tokens();
         assertEquals(expectedTokens, actualTokens);
     }
-
-    @Test
-    public void testLexerIdentAndString() {
-        String program = "(print \"Hello, world!\")";
-        List<Token> expectedTokens = Arrays.asList(
-                new PlainToken(TokenType.LPAREN),
-                new DataToken(TokenType.IDENTIFIER, "print"),
-                new DataToken(TokenType.STRING_LITERAL, "Hello, world!"),
-                new PlainToken(TokenType.RPAREN)
-        );
-
-        List<Token> actualTokens = new Lexer(program).tokens();
-        assertEquals(expectedTokens, actualTokens);
-    }
 }

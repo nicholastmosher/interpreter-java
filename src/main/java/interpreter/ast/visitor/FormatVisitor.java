@@ -14,11 +14,6 @@ public class FormatVisitor implements Visitor<String> {
     }
 
     @Override
-    public String visitString(StringLiteralNode string) {
-        return String.format("\"%s\"", string.contents);
-    }
-
-    @Override
     public String visitList(ListNode listNode) {
         StringBuilder listString = new StringBuilder();
         for (int i = 0; i < listNode.items.size(); i++) {

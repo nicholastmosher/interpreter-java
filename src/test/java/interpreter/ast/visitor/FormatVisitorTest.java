@@ -17,19 +17,4 @@ public class FormatVisitorTest {
         String output = ast.accept(new FormatVisitor());
         assertEquals(output, "(add 2 3)");
     }
-
-    @Test
-    public void testFormatString() {
-        Node ast = new ListNode(
-                new IdentifierNode("print"),
-                new ListNode(
-                        new IdentifierNode("append"),
-                        new StringLiteralNode("Hello"),
-                        new StringLiteralNode(", world!")
-                )
-        );
-
-        String output = ast.accept(new FormatVisitor());
-        assertEquals(output, "(print (append \"Hello\" \", world!\"))");
-    }
 }
